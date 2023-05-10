@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highcharts Examples</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/sankey.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</head>
+
+<style>
+    body {
+        background-color: #120c21; 
+    }
+</style>
+
+
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+    }
+
+    h1 {
+        background-color: #F2F2F2;
+        padding: 10px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .chart-container {
+        border: 1px solid #DDD;
+        padding: 10px;
+        margin-bottom: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .chart-container:hover {
+        box-shadow: 2px 2px 5px #DDD;
+    }
+
+    @media screen and (max-width: 768px) {
+        h1 {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>Pi-Chart</h1>
+        <div class="chart-container" id="pichart"></div>
+
+        <h1>Heatmap Chart</h1>
+        <div class="chart-container" id="heatmap-chart"></div>
+
+        <h1>Funnel Chart</h1>
+        <div class="chart-container" id="funnelchart"></div>
+
+        <h1>Area Chart</h1>
+        <div class="chart-container" id="myAreaChart"></div>
+
+        <h1>Spline Chart</h1>
+        <div class="chart-container" id="splinechart"></div>
+
+        <h1>Bar-Chart</h1>
+        <div class="chart-container" id="barchart"></div>
+    </div>
+
+
+    <script>
+        // Chart options
+        var options = {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: 'Monthly Air Quality Index in Australian Cities'
+            },
+            subtitle: {
+                text: 'Source: Environmental Protection Agency (EPA)'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Air Quality Index'
+                }
+            },
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+                }
+            },
+            series: [{
+                name: 'Sydney',
+                marker: {
+                    symbol: 'square'
+                },
+                data: [39, 32, 38, 41, 48, 54, 62, 65, 58, 47, 38, 33]
+            }, {
+                name: 'Melbourne',
+                marker: {
+                    symbol: 'diamond'
+                },
+                data: [27, 21, 21, 23, 30, 35, 38, 40, 35, 29, 25, 23]
+            }, {
+                name: 'Brisbane',
+                marker: {
+                    symbol: 'circle'
+                },
+                data: [16, 14, 15, 16, 18, 19, 20, 21, 20, 18, 16, 15]
+            }, {
+                name: 'Perth',
+                marker: {
+                    symbol: 'triangle'
+                },
+                data: [23, 19, 17, 17, 17, 16, 16, 17, 18, 19, 21, 23]
+            }]
+
+        };
+
+        // Rendering the chart
+        Highcharts.chart('splinechart', options);
+    </script>
+
+
+
+
+    <script>
+        Highcharts.chart('pichart', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Browser market shares in January, 2018'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        connectorShape: 'crookedLine', // modify connector shape
+                        connectorWidth: 1.5, // modify connector width
+                        distance: 10 // move labels closer to the center
+                    },
+                    innerSize: '50%', // make a hole in the center of the pie
+                    borderWidth: 2, // add a border to the slices
+                    borderColor: '#ffffff', // set the color of the border
+                    colors: ['#66CCCC', '#FFCCCC', '#CCCCFF', '#FFCC99', '#99CC99', '#CCCC99', '#FF9999', '#9999FF', '#FF99CC'], // set custom colors for the slices
+                    showInLegend: true, // show the legend
+                    size: '100%' // set the size of the chart to be the full container size
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Chrome',
+                    y: 61.41,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Internet Explorer',
+                    y: 11.84
+                }, {
+                    name: 'Firefox',
+                    y: 10.85
+                }, {
+                    name: 'Edge',
+                    y: 4.67
+                }, {
+                    name: 'Safari',
+                    y: 4.18
+                }, {
+                    name: 'Sogou Explorer',
+                    y: 1.64
+                }, {
+                    name: 'Opera',
+                    y: 1.6
+                }, {
+                    name: 'QQ',
+                    y: 1.2
+                }, {
+                    name: 'Other',
+                    y: 2.61
+                }]
+            }]
+        });
+    </script>
+
+
+
+
+    <script>
+        Highcharts.chart('myAreaChart', {
+            title: {
+                text: 'Sales over time'
+            },
+            xAxis: {
+                categories: ['Q1', 'Q2', 'Q3', 'Q4']
+            },
+            yAxis: {
+                title: {
+                    text: 'Revenue'
+                }
+            },
+            tooltip: {
+                shared: true,
+                valueSuffix: ' dollars'
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            series: [{
+                type: 'area',
+                name: 'Sales',
+                data: [4000, 4500, 5000, 5500]
+            }]
+        });
+    </script>
+
+
+
+
+
+    <script>
+        Highcharts.chart('barchart', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Sales Data for 2022'
+            },
+            subtitle: {
+                text: 'Source: ACME Inc.'
+            },
+            xAxis: {
+                categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+                title: {
+                    text: 'Quarter'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Sales (USD)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valuePrefix: '$',
+                valueSuffix: ' USD'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '${y} USD'
+                    },
+                    borderRadius: 5,
+                    borderWidth: 0,
+                    colorByPoint: true
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Product A',
+                data: [25000, 32000, 42000, 52000]
+            }, {
+                name: 'Product B',
+                data: [18000, 28000, 38000, 48000]
+            }, {
+                name: 'Product C',
+                data: [20000, 30000, 35000, 40000]
+            }]
+        });
+    </script>
+
+
+    <script>
+        Highcharts.chart('heatmap-chart', {
+            chart: {
+                type: 'heatmap',
+                marginTop: 40,
+                marginBottom: 80,
+                plotBorderWidth: 1
+            },
+            title: {
+                text: 'Temperature Heatmap Chart'
+            },
+            xAxis: {
+                categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+            },
+            yAxis: {
+                categories: ['6am', '9am', '12pm', '3pm', '6pm', '9pm'],
+                title: null
+            },
+            colorAxis: {
+                min: 0,
+                minColor: '#FFFFFF',
+                maxColor: Highcharts.color('#FF0000').brighten(1).get(),
+                stops: [
+                    [0, '#FFFFFF'],
+                    [0.25, '#F7D0C4'],
+                    [0.5, '#F79B8B'],
+                    [0.75, '#FF5733'],
+                    [1, Highcharts.color('#FF0000').brighten(1).get()]
+                ]
+            },
+            series: [{
+                name: 'Temperature',
+                borderWidth: 1,
+                data: [
+                    [0, 0, 12], [0, 1, 17], [0, 2, 22], [0, 3, 19], [0, 4, 16], [0, 5, 13],
+                    [1, 0, 14], [1, 1, 19], [1, 2, 25], [1, 3, 22], [1, 4, 18], [1, 5, 16],
+                    [2, 0, 18], [2, 1, 23], [2, 2, 28], [2, 3, 25], [2, 4, 20], [2, 5, 17],
+                    [3, 0, 20], [3, 1, 25], [3, 2, 30], [3, 3, 27], [3, 4, 22], [3, 5, 18],
+                    [4, 0, 22], [4, 1, 27], [4, 2, 32], [4, 3, 29], [4, 4, 24], [4, 5, 20],
+                    [5, 0, 20], [5, 1, 25], [5, 2, 30], [5, 3, 27], [5, 4, 22], [5, 5, 18],
+                    [6, 0, 18], [6, 1, 23], [6, 2, 28], [6, 3, 25], [6, 4, 20], [6, 5, 17],
+                ]
+            }]
+        });
+    </script>
+
+
+    <script>
+        Highcharts.chart('funnelchart', {
+            chart: {
+                type: 'funnel',
+                height: '50%'
+            },
+            title: {
+                text: 'Conversion Funnel'
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b> ({point.y:,.0f})',
+                        softConnector: true,
+                        color: 'white'
+                    },
+                    neckWidth: '30%',
+                    neckHeight: '25%',
+                    gradient: {
+                        enabled: true,
+                        stops: [
+                            [0, '#005aa7'],
+                            [0.5, '#fff'],
+                            [1, '#ffdc34']
+                        ]
+                    }
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [{
+                name: 'Steps',
+                data: [
+                    { name: 'Visitors', y: 5000 },
+                    { name: 'Leads', y: 2500 },
+                    { name: 'Opportunities', y: 1250 },
+                    { name: 'Proposals', y: 625 },
+                    { name: 'Sales', y: 312 }
+                ]
+            }]
+        });
+    </script>
+
+
+
+</body>
+
+</html>
